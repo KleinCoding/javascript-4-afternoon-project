@@ -32,6 +32,25 @@
 //Code Here
 
 
+class Employee {
+  constructor(first_name, last_name, email, age) {
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+  }
+  makeWidget() {
+    return (this.first_name + " " + this.last_name + " Widget")
+  }
+}
+
+const jason = new Employee("Jason", "Jones", "jasonjones@outlook.com", 29)
+console.log(jason)
+console.log(jason.makeWidget())
+
+
+
+
 ////////// PROBLEM 2 //////////
 
 /*
@@ -49,15 +68,24 @@
 
 //Code Here
 
-
+class Manager extends Employee {
+  constructor(first_name, last_name, email, age) {
+    super(first_name, last_name, email, age)
+    this.reports = [];
+  }
+  hire(employee) {
+    this.reports.push(employee)
+  }
+  fire(index) {
+    this.reports.splice(index, 1)
+  }
+}
 ////////// PROBLEM 3 //////////
-
 /*
   Managers for Widget Co. get promoted when they get more employees, and get a bonus when they fire employees.
   create a class ProgressiveManager that extends Manager.  A Progressive Manager has all of the same properties as a manager with the following additional properties:
     - title - default 'Not a manager'
     - bonus - default 0
-
   When employees are hired or fired, the manager's title should be updated based on the number of reports.
     0 reports : Not a manager
     1-3 reports : Barely Manager
@@ -65,14 +93,47 @@
     11-50 reports : Manager
     51-100 reports : Manager Plus
     101+ reports : Bestest Manager
-
   Everytime they fire an employee they get $100 added to their bonus.
-
   Call your new class ProgressiveManager
 */
-
 //Code Here
 
+class ProgressiveManager extends Manager {
+  constructor(first_name, last_name, email, age) {
+    super(first_name, last_name, email, age)
+    this.reports = [],
+    this.title = "Not a manager",
+    this.bonus = 0
+    this.counter = 0
+    }
+  hire(employee) {
+  this.reports.push(employee);
+  if(this.reports.length === 0) {
+  return this.title = "Not a manager";
+}
+else if (this.reports.length  > 0 && this.reports.length < 4) {
+  return this.title = "Barely Manager";
+}
+else if (this.reports.length  > 3 && this.reports.length  < 11) {
+  return this.title = "Mostly Manager";
+}
+else if (this.reports.length  > 10 && this.reports.length  < 51) {
+  return this.title = "Manager";
+}
+else if (this.reports.length  > 50 && this.reports.length  < 101) {
+  return this.title = "Manager Plus";
+}
+else if (this.reports.length  > 100) {
+  return this.title = "Bestest Manager";
+}
+}
+fire(index) {
+  this.reports.splice(index, 1);
+  this.counter = this.counter + 1;
+  this.bonus = this.counter * 100;
+}
+ 
+  }
 
 
 ////////// PROBLEM 4 - Black Diamond //////////
